@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ввод данных</title>
+          <style>
+        body {
+          font-family: Arial;
+          padding: 20px;
+          background: #f1f1f1;
+        }
+        /* Header/Blog Title */
+.header {
+  /*padding: 30px;*/
+  font-size: 40px;
+  text-align: left;
+  
+  /*background: white;*/
+}
+input {
+  
+  background-color: white;
+	border: none;
+	padding: 15px 32px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+  
+  /*background: white;*/
+}
+</style>
+    <script src="https://api-maps.yandex.ru/2.1/?load=package.standard&amp;lang=ru-RU&amp;apikey=0a925988-d437-42ab-a427-442d84e58e58
+" type="text/javascript"></script>
+<script src="https://yandex.st/jquery/2.2.3/jquery.min.js" type="text/javascript"></script>
+    </head>
+    <body>
+    <script>
+//document.getElementsByTagName("input")[3].value = 44
+//document.getElementsByTagName("input")[4].value = 34; 
+//document.forms["add"].getElementsByTagName("input")[3].value = 44;
+//document.forms["add"].getElementsByTagName("input")[4].value = 34;
+//console.log(document.forms["add"].getElementsByTagName("input")[3].value)
+
+ 
+/*ymaps.ready(init);
+
+var myMap;
+var coords;
+
+
+function init () {
+   //var geolocation = ymaps.geolocation,
+    myMap = new ymaps.Map("map", {
+        center: [44.9, 34], // Углич
+        zoom: 11,
+        controls: ['geolocationControl']
+     }, {
+            searchControlProvider: 'yandex#search'
+        });
+   
+    
+    
+    myMap.events.add('click', function (e) {
+        if (!myMap.balloon.isOpen()) {
+            coords = e.get('coordPosition');
+            document.forms["add"].getElementsByTagName("input")[3].value = coords[0].toPrecision(6)
+            document.forms["add"].getElementsByTagName("input")[4].value = coords[1].toPrecision(6)
+            myMap.balloon.open(coords, {
+                contentHeader:'Событие!',
+                contentBody:'<p>Кто-то щелкнул по карте.</p>' +
+                    '<p>Координаты щелчка: ' + [
+                    coords[0].toPrecision(6),
+                    coords[1].toPrecision(6)
+                    ].join(', ') + '</p>',
+                contentFooter:'<sup>Щелкните еще раз</sup>'
+            });
+            
+        }
+
+        else {
+            myMap.balloon.close();
+        }
+    });
+
+    // Обработка события, возникающего при щелчке
+    // правой кнопки мыши в любой точке карты.
+    // При возникновении такого события покажем всплывающую подсказку
+    // в точке щелчка.
+    myMap.events.add('contextmenu', function (e) {
+        myMap.hint.show(e.get('coordPosition'), 'Кто-то щелкнул правой кнопкой');
+    });
+    
+   
+}*/
+ymaps.ready(function () {
+    var map;
+    ymaps.geolocation.get().then(function (res) {
+        var mapContainer = $('#map'),
+            bounds = res.geoObjects.get(0).properties.get('boundedBy'),
+            // Рассчитываем видимую область для текущей положения пользователя.
+            mapState = ymaps.util.bounds.getCenterAndZoom(
+                bounds,
+                [mapContainer.width(), mapContainer.height()]
+            );
+        createMap(mapState);
+    }, function (e) {
+        // Если местоположение невозможно получить, то просто создаем карту.
+        createMap({
+            center: [55.751574, 37.573856],
+            zoom: 2
+        });
+    });
+    
+    function createMap (state) {
+        map = new ymaps.Map('map', state);
+        map.events.add('click', function (e) {
+        if (!map.balloon.isOpen()) {
+            coords = e.get('coords');
+            document.forms["add"].getElementsByTagName("input")[4].value = coords[0].toPrecision(6)
+            document.forms["add"].getElementsByTagName("input")[5].value = coords[1].toPrecision(6)
+            map.balloon.open(coords, {
+                contentHeader:'Событие!',
+                contentBody:'<p>Кто-то щелкнул по карте.</p>' +
+                    '<p>Координаты щелчка: ' + [
+                    coords[0].toPrecision(6),
+                    coords[1].toPrecision(6)
+                    ].join(', ') + '</p>',
+                contentFooter:'<sup>Щелкните еще раз</sup>'
+            });
+            
+        }
+
+        else {
+            map.balloon.close();
+        }
+    });
+
+    // Обработка события, возникающего при щелчке
+    // правой кнопки мыши в любой точке карты.
+    // При возникновении такого события покажем всплывающую подсказку
+    // в точке щелчка.
+    map.events.add('contextmenu', function (e) {
+        map.hint.show(e.get('coords'), 'Кто-то щелкнул правой кнопкой');
+    });
+      // Hiding the hint when opening the balloon.
+    map.events.add('balloonopen', function (e) {
+        map.hint.close();
+    });
+    }
+});
+  
+  
+</script>
+        <h2>Ввод данных</h2>
+        <form method="POST" name="add">
+            <label>Название</label><br>
+            <input type="text" name="title" /><br><br>
+            <label>URL Фото (на внешнем хостинге)</label><br>
+            <input type="text" name="img" /><br><br>
+            <label>Описание</label><br>
+            <input type="text" name="desc" /><br><br>
+            <label>Где вы видели свою вещь в последний раз?</label><br>
+            <input type="text" name="lost" /><br><br>
+            <label>Укажите местоположение пропавшей вещи</label><br>
+            <input type="text" name="lat" value="44"/>
+            <input type="text" name="lon" value="34"/>
+            <div id="map" style="width:400px; height:300px"></div>
+            <input type="submit" value="Отправить" />
+        </form>
+    </body>
+</html>

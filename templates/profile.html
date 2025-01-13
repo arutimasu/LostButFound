@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ввод данных</title>
+          <style>
+        body {
+          background-color: white
+          font-family: Arial;
+          padding: 20px;
+          background: #f1f1f1;
+        }
+        /* Header/Blog Title */
+.header {
+  /*padding: 30px;*/
+  font-size: 40px;
+  text-align: left;
+  }
+input {
+  
+  background-color: white;
+	border: none;
+	padding: 15px 32px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+  
+  /*background: white;*/
+}
+</style>
+</head>
+    <body>
+     <h2>Профиль</h2>
+     <p>{{.Name}} {{.Lastname}}</p>
+     <p>Рейтинг: {{.Rating}}</p>
+     </body>
+</html>

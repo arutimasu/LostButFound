@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Ввод данных</title>
+          <style>
+        body {
+          font-family: Arial;
+          padding: 20px;
+          background: #f1f1f1;
+        }
+        /* Header/Blog Title */
+.header {
+  /*padding: 30px;*/
+  font-size: 40px;
+  text-align: left;
+  }
+input {
+  
+  background-color: white;
+	border: none;
+	padding: 15px 32px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+  
+  /*background: white;*/
+}
+</style>
+</head>
+    <body>
+     <h2>Регистрация</h2>
+        <form method="POST" name="add">
+            <label>Имя</label><br>
+            <input type="text" name="name" /><br><br>
+            <label>Фамилия</label><br>
+            <input type="text" name="lastname" /><br><br>
+            <label>Адрес электроной почты (будет отображатся для связи)</label><br>
+            <input type="text" name="email" /><br><br>
+            <!--<label>ВКонтакте</label><br>
+            <input type="text" name="vk" /><br><br>
+             <label>Telegram</label><br>
+            <input type="text" name="telegram" /><br><br>-->
+            <label>Пароль</label><br>
+            <input type="password" name="password" /><br><br>
+            
+            
+            <input type="submit" value="Отправить" />
+        </form>
+     </body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=0.5">
+        <title>Lost but Found</title>
+        <!--<script src="https://api-maps.yandex.ru/2.1/?lang=ru_RU&amp;apikey=0a925988-d437-42ab-a427-442d84e58e58
+" type="text/javascript"></script>-->
+        <style>
+        body {
+          font-family: Arial;
+          padding: 20px;
+          background: #f1f1f1;
+        }
+        /* Header/Blog Title */
+.header {
+  /*padding: 30px;*/
+  font-size: 16px;
+  text-align: left;
+  
+  /*background: white;*/
+}
+.btn {
+	background-color: green;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: left;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+  float: right;
+}
+.found-btn {
+	background-color: green;
+	border: none;
+	color: white;
+	padding: 15px 32px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+  
+}
+a:hover {
+	background-color: rgb(0,64,0);
+}
+
+        /* Add a card effect for articles */
+        .card {
+          background-color: white;
+          padding: 20px;
+          margin-top: 20px;
+        }
+        </style>
+    </head>
+    <body>  
+    
+            <div class="header">
+             
+              <h2>Lost but Found <a href="/add" class="btn">Добавить вещь</a>
+              {{if .IsAuth}}
+              <a href="/profil?id={{.userID}}" class="btn">{{.Name}}</a></h2>
+              {{else}}
+              <a href="/register" class="btn">Регистрация</a><a href="/login" class="btn">Вход</a></h2>
+              {{end}}
+            </div>
+             {{range .Posts}}
+             <div class="card">
+             <h2>{{.Title}}</h2>
+             {{if .Image}}
+            <img src="{{.Image}}" width="400" height="400"></img>
+            {{end}}
+            <p><strong>ID вещи: </strong>{{.Id}}</p>
+              <p>{{.Date}}</p>
+               <p>{{.Sender}}</p>
+              
+               <p><strong>Описание: </strong>{{.Description}}</p>
+               <p><strong>Где она была в последний раз?</strong> {{.Lost}}</p>
+               <p><strong>Координаты: </strong><a href="/position?lat={{.Lat}}&lon={{.Lon}}">широта: {{.Lat}}, долгота: {{.Lon}}</a></p>
+             
+               {{if .IsConfirmed}}
+                <p><strong>Статус: </strong>Найдена</p>
+                {{else if .IsFound}}
+                 <p><strong>Статус: </strong>Ожидает подтверждения</p>
+                {{else}}
+                <p><strong>Статус: </strong>Пока не найдена</p>
+                {{end}}
+                 {{if and (eq .Sender $.Name) (not .IsFound) }}
+                <a href="/confirm?id={{.Id}}" class="found-btn">Подтвердить.</a>
+                {{else if and (ne .Sender $.Name) (not .IsFound)}}
+               <a href="/found?id={{.Id}}" class="found-btn">Нашёл!</a>
+                {{end}}
+             </div>          
+             {{end}}      
+    </body>
+</html>
